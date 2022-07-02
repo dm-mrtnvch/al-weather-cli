@@ -13,5 +13,9 @@
   },
   "keywords": [],
   "author": "dmvshn",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.0.1",
+    "dedent": "^0.7.0"
+  }
 }
