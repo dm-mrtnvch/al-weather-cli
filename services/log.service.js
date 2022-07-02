@@ -19,7 +19,7 @@ const printHelp = () => {
     -s [CITY] to set a city
     -h for help
     -t [API_KEY] to save token`
-  ))
+    ))
 }
 
 export {printSuccess, printError, printHelp}
