@@ -5,11 +5,11 @@ import dedent from 'dedent'
 const {bgGreen, bgRed, bgCyan} = chalk
 
 const printSuccess = (message) => {
-  console.log(bgGreen('SUCCESS: '), message)
+  console.log(bgGreen('SUCCESS:'), message)
 }
 
 const printError = (error) => {
-  console.log(bgRed('ERROR: '), error)
+  console.log(bgRed('ERROR:'), error)
 }
 
 const printHelp = () => {
