@@ -1,5 +1,5 @@
 {
-  "name": "weather-cli",
+  "name": "global-weather-cli",
   "version": "1.0.0",
   "description": "getting weather CLI",
   "main": "index.js",
