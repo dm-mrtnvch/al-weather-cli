@@ -1,8 +1,8 @@
 #!/usr/bin/env mode
 import getArgs from './helpers/args.js';
-import {printError, printHelp, printSuccess} from './services/log.service.js';
-import {saveKeyValue, TOKEN_DICTIONARY} from './services/storage.service.js';
-import {getWeather} from './services/api.service.js';
+import {printError, printHelp, printSuccess, printWeather} from './services/log.service.js';
+import {getKeyValue, saveKeyValue, TOKEN_DICTIONARY} from './services/storage.service.js';
+import {getIcon, getWeather} from './services/api.service.js';
 
 const saveToken = async (token) => {
   if (!token.length) {
@@ -17,10 +17,24 @@ const saveToken = async (token) => {
   }
 }
 
+const saveCity = async (city) => {
+  if (!city.length) {
+    printError('city is required')
+    return
+  }
+  try {
+    await saveKeyValue(TOKEN_DICTIONARY.city, city)
+    printSuccess('city was saved')
+  } catch (e) {
+    printError(e.message)
+  }
+}
+
 const getForecast = async () => {
   try {
-    const weather = await getWeather(process.env.CITY)
-    console.log(weather)
+    const city = process.env.CITY ?? await getKeyValue(TOKEN_DICTIONARY.city)
+    const weather = await getWeather(city)
+    printWeather(weather, getIcon(weather.weather[0].icon))
   } catch (e) {
     if (e?.response?.status === 404) {
       printError('invalid city')
@@ -38,7 +52,7 @@ const initCLI = () => {
     printHelp()
   }
   if (args.s) {
-    // save city
+   saveCity(args.s)
   }
   if (args.t) {
     return saveToken(args.t)
