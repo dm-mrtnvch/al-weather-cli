@@ -5,7 +5,7 @@ import {saveKeyValue, TOKEN_DICTIONARY} from './services/storage.service.js';
 import {getWeather} from './services/api.service.js';
 
 const saveToken = async (token) => {
-  if(!token.length){
+  if (!token.length) {
     printError('token is required')
     return
   }
@@ -14,6 +14,21 @@ const saveToken = async (token) => {
     printSuccess('token was saved')
   } catch (e) {
     printError(e.message)
+  }
+}
+
+const getForecast = async () => {
+  try {
+    const weather = await getWeather(process.env.CITY)
+    console.log(weather)
+  } catch (e) {
+    if (e?.response?.status === 404) {
+      printError('invalid city')
+    } else if (e?.response?.status === 401) {
+      printError('invalid token')
+    } else {
+      printError(e.message)
+    }
   }
 }
 
@@ -28,7 +43,7 @@ const initCLI = () => {
   if (args.t) {
     return saveToken(args.t)
   }
-  getWeather('minsk')
+  getForecast()
 }
 
 initCLI()
